@@ -1,0 +1,32 @@
+Donier Do 328 Jet is a free and open source Dornier Do 328 Jet
+airplane flight simulator project for FlightGear.
+
+The goal of this model is to build a complete Do 328 Jet with a
+reasonable flight dynamic model and most functions of the Honeywell
+FMZ 2000 system.
+
+The reason why IceGuye and Bo Lan intent to develop this aircraft
+is not because it is popular or beautiful like many other jumbo
+airliners. It is because it can land everywhere; it can do mid to long
+range flight with optional tanks; its FMS system can be reused by many
+other FlightGear open source projects such as the Citation X; it gives
+you a plausible flight dream, which is more possible to touch such a
+system rather than a jumbo airliner when your dream come true.
+
+Copyright © 2015 IceGuye and Bo Lan
+
+This file is part of Donier Do 328 Jet.
+
+Donier Do 328 Jet is free software: you can redistribute it and/or
+modify it under the terms of the GNU General Public License as
+published by the Free Software Foundation, either version 2 of the
+License, or any later version.
+
+Donier Do 328 Jet is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Donier Do 328 Jet. If not, see
+<http://www.gnu.org/licenses/>.

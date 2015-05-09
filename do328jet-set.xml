@@ -1,0 +1,13 @@
+<PropertyList>
+  <sim>
+
+    <description>
+      Fairchild Dornier 328JET
+    </description>
+    <status>alpha</status>
+    <author>IceGuye; Bo</author>
+    <flight-model>jsb</flight-model>
+    <aero>do328jet</aero>
+
+  </sim>
+</PropertyList>
