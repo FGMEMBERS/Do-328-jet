@@ -5,7 +5,7 @@
    xsi:noNamespaceSchemaLocation="http://jsbsim.sourceforge.net/JSBSim.xsd">
 
  <fileheader>
-  <author> Aeromatic v 0.95 </author>
+  <author> IceGuye, Bo Lan, and the Bot -- Automatic </author>
   <filecreationdate>2015-05-07</filecreationdate>
   <version>$Revision: 1.15 $</version>
   <description> Models a Do 328 Jet. </description>
@@ -42,10 +42,10 @@
    <wingspan  unit="FT" >   68.84 </wingspan>
    <wing_incidence>          2.00 </wing_incidence>
    <chord     unit="FT" >    6.26 </chord>
-   <htailarea unit="FT2">   91.50 </htailarea>
-   <htailarm  unit="FT" >   37.33 </htailarm>
-   <vtailarea unit="FT2">  199.15 </vtailarea>
-   <vtailarm  unit="FT" >   37.33 </vtailarm>
+   <htailarea unit="FT2">   105.7585 </htailarea>
+   <htailarm  unit="FT" >   37.8521 </htailarm>
+   <vtailarea unit="FT2">  174.7093 </vtailarea>
+   <vtailarm  unit="FT" >   30.1346 </vtailarm>
    <location name="AERORP" unit="IN">
      <x> 391.48 </x>
      <y>   0.00 </y>
@@ -164,9 +164,9 @@
 
    <engine file="PW306BL">
     <location unit="IN">
-      <x> 391.48 </x>
-      <y> -137.67 </y>
-      <z> -40.00 </z>
+      <x> 303.60 </x>
+      <y> -145.20 </y>
+      <z> 0.00 </z>
     </location>
     <orient unit="DEG">
       <pitch> 0.00 </pitch>
@@ -176,9 +176,9 @@
     <feed>0</feed>
     <thruster file="direct">
      <location unit="IN">
-       <x> 391.48 </x>
-       <y> -137.67 </y>
-       <z> -40.00 </z>
+       <x> 387.60 </x>
+       <y> -145.20 </y>
+       <z> 0.00 </z>
      </location>
      <orient unit="DEG">
        <pitch> 0.00 </pitch>
@@ -190,9 +190,9 @@
 
    <engine file="PW306BL">
     <location unit="IN">
-      <x> 391.48 </x>
-      <y> 137.67 </y>
-      <z> -40.00 </z>
+      <x> 303.60 </x>
+      <y> 145.20 </y>
+      <z> 0.00 </z>
     </location>
     <orient unit="DEG">
       <pitch> 0.00 </pitch>
@@ -202,9 +202,9 @@
     <feed>1</feed>
     <thruster file="direct">
      <location unit="IN">
-       <x> 391.48 </x>
-       <y> 137.67 </y>
-       <z> -40.00 </z>
+       <x> 387.60 </x>
+       <y> 145.20 </y>
+       <z> 0.00 </z>
      </location>
      <orient unit="DEG">
        <pitch> 0.00 </pitch>
@@ -218,7 +218,7 @@
      <location unit="IN">
        <x> 391.48 </x>
        <y>   0.00 </y>
-       <z> -20.99 </z>
+       <z> 0.00 </z>
      </location>
      <capacity unit="LBS"> 3188.30 </capacity>
      <contents unit="LBS"> 1594.15 </contents>
@@ -228,7 +228,7 @@
      <location unit="IN">
        <x> 391.48 </x>
        <y>   0.00 </y>
-       <z> -20.99 </z>
+       <z> 0.00 </z>
      </location>
      <capacity unit="LBS"> 3188.30 </capacity>
      <contents unit="LBS"> 1594.15 </contents>
@@ -238,7 +238,7 @@
      <location unit="IN">
        <x> 391.48 </x>
        <y>   0.00 </y>
-       <z> -20.99 </z>
+       <z> 0.00 </z>
      </location>
      <capacity unit="LBS"> 3188.30 </capacity>
      <contents unit="LBS"> 1594.15 </contents>
@@ -262,8 +262,8 @@
    <aerosurface_scale name="Elevator Control">
       <input>fcs/pitch-trim-sum</input>
       <range>
-        <min> -0.35 </min>
-        <max>  0.35 </max>
+        <min> -0.436332313 </min>
+        <max>  0.523598776 </max>
       </range>
       <output>fcs/elevator-pos-rad</output>
    </aerosurface_scale>
@@ -271,8 +271,8 @@
    <aerosurface_scale name="elevator normalization">
       <input>fcs/elevator-pos-rad</input>
       <domain>
-        <min> -0.35 </min>
-        <max>  0.35 </max>
+        <min> -0.436332313 </min>
+        <max>  0.523598776 </max>
       </domain>
       <range>
         <min> -1 </min>
@@ -297,8 +297,8 @@
    <aerosurface_scale name="Left Aileron Control">
       <input>fcs/roll-trim-sum</input>
       <range>
-        <min> -0.35 </min>
-        <max>  0.35 </max>
+        <min> -0.436332313 </min>
+        <max>  0.488692191 </max>
       </range>
       <output>fcs/left-aileron-pos-rad</output>
    </aerosurface_scale>
@@ -306,8 +306,8 @@
    <aerosurface_scale name="Right Aileron Control">
       <input>fcs/roll-trim-sum</input>
       <range>
-        <min> -0.35 </min>
-        <max>  0.35 </max>
+        <min> -0.436332313 </min>
+        <max>  0.488692191 </max>
       </range>
       <output>fcs/right-aileron-pos-rad</output>
    </aerosurface_scale>
@@ -315,8 +315,8 @@
    <aerosurface_scale name="left aileron normalization">
       <input>fcs/left-aileron-pos-rad</input>
       <domain>
-        <min> -0.35 </min>
-        <max>  0.35 </max>
+        <min> -0.436332313 </min>
+        <max>  0.488692191 </max>
       </domain>
       <range>
         <min> -1 </min>
@@ -328,8 +328,8 @@
    <aerosurface_scale name="right aileron normalization">
       <input>fcs/right-aileron-pos-rad</input>
       <domain>
-        <min> -0.35 </min>
-        <max>  0.35 </max>
+        <min> -0.436332313 </min>
+        <max>  0.488692191 </max>
       </domain>
       <range>
         <min> -1 </min>
@@ -380,8 +380,8 @@
         <max>  1.1 </max>
       </domain>
       <range>
-        <min> -0.35 </min>
-        <max>  0.35 </max>
+        <min> -0.418879021 </min>
+        <max>  0.418879021 </max>
       </range>
       <output>fcs/rudder-pos-rad</output>
    </aerosurface_scale>
@@ -389,8 +389,8 @@
    <aerosurface_scale name="rudder normalization">
       <input>fcs/rudder-pos-rad</input>
       <domain>
-        <min> -0.35 </min>
-        <max>  0.35 </max>
+        <min> -0.418879021 </min>
+        <max>  0.418879021 </max>
       </domain>
       <range>
         <min> -1 </min>
@@ -410,14 +410,17 @@
           <time>      0 </time>
        </setting>
        <setting>
-          <position> 15 </position>
+          <position> 12 </position>
           <time>      4 </time>
        </setting>
        <setting>
-          <position> 30 </position>
+          <position> 20 </position>
           <time>      3 </time>
        </setting>
-     </traverse>
+       <setting>
+          <position> 32 </position>
+          <time>      4 </time>
+       </setting>     </traverse>
      <output>fcs/flap-pos-deg</output>
    </kinematic>
 
@@ -425,7 +428,7 @@
       <input>fcs/flap-pos-deg</input>
       <domain>
         <min>  0 </min>
-        <max> 30 </max>
+        <max> 32 </max>
       </domain>
       <range>
         <min> 0 </min>
