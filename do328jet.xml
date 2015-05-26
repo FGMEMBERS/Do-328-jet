@@ -844,16 +844,316 @@
 
   <axis name="DRAG">
 
+         <function name="aero/coefficient/CD">
+            <description>
+               Basic Drag Coefficient
+               Sense: Always positive
+               Main contributor to Phugoid damping: Greater Cd, Better damping
+            </description>
+            <product>
+               <property>aero/function/ground-effect-factor-lift</property>
+               <property>aero/qbar-psf</property>
+               <property>metrics/Sw-sqft</property>
+               <table>
+                  <independentVar lookup="row">aero/alpha-deg</independentVar>
+                  <tableData>
+                       -16.00         .8529E-01
+                       -8.000         .3687E-01
+                       -6.000         .3236E-01
+                       -4.000         .3187E-01
+                       -2.000         .3530E-01
+                         .000         .4264E-01
+                        2.000         .5171E-01
+                        4.000         .6122E-01
+                        8.000         .8081E-01
+                        9.000         .8714E-01
+                        10.00         .9409E-01
+                        12.00         .1133    
+                        14.00         .1383    
+                        16.00         .1685    
+                        18.00         .2059    
+                        19.00         .2266    
+                        20.00         .2486    
+                        21.00         .2723    
+                        22.00         .2970    
+                        24.00         .3548    
+                  </tableData>
+               </table>
+            </product>
+         </function>
+    
+         <function name="aero/coefficient/CdDf1L">
+            <description>
+               Drag Coefficient due to Left Plain Flaps Deflection
+               Positive surface deflection is trailing edge down
+               Ultimately, we will feed this left flap pos
+            </description>
+            <product>
+               <property>aero/qbar-psf</property>
+               <property>metrics/Sw-sqft</property>
+               <table>
+                  <independentVar lookup="row">aero/alpha-deg</independentVar>
+                  <independentVar lookup="column">fcs/flap-pos-deg</independentVar>
+                  <tableData>
+                                     -30.00        -20.00        -15.00        -5.000          .000         5.000         15.00         20.00         30.00    
+                       -16.00         .8676E-02     .7357E-02     .6430E-02     .1881E-02      .000        -.1555E-02    -.3633E-02    -.3874E-02    -.4140E-02
+                       -8.000         .4879E-02     .4029E-02     .3449E-02     .8630E-03      .000        -.5370E-03    -.6519E-03    -.5465E-03    -.3431E-03
+                       -6.000         .4012E-02     .3270E-02     .2768E-02     .6307E-03      .000        -.3047E-03     .2841E-04     .2126E-03     .5232E-03
+                       -4.000         .3161E-02     .2524E-02     .2100E-02     .4024E-03      .000        -.7643E-04     .6971E-03     .9589E-03     .1375E-02
+                       -2.000         .2330E-02     .1796E-02     .1447E-02     .1797E-03      .000         .1463E-03     .1349E-02     .1687E-02     .2205E-02
+                         .000         .1501E-02     .1070E-02     .7966E-03    -.4246E-04      .000         .3685E-03     .2000E-02     .2413E-02     .3034E-02
+                        2.000         .6536E-03     .3269E-03     .1308E-03    -.2698E-03      .000         .5958E-03     .2666E-02     .3156E-02     .3882E-02
+                        4.000        -.2413E-03    -.4572E-03    -.5719E-03    -.5097E-03      .000         .8357E-03     .3369E-02     .3940E-02     .4777E-02
+                        8.000        -.2236E-02    -.2205E-02    -.2138E-02    -.1044E-02      .000         .1370E-02     .4935E-02     .5688E-02     .6771E-02
+                        9.000        -.2760E-02    -.2665E-02    -.2550E-02    -.1185E-02      .000         .1511E-02     .5347E-02     .6148E-02     .7296E-02
+                        10.00        -.3278E-02    -.3118E-02    -.2956E-02    -.1324E-02      .000         .1650E-02     .5753E-02     .6601E-02     .7813E-02
+                        12.00        -.4288E-02    -.4003E-02    -.3750E-02    -.1595E-02      .000         .1921E-02     .6546E-02     .7486E-02     .8823E-02
+                        14.00        -.5256E-02    -.4851E-02    -.4509E-02    -.1854E-02      .000         .2180E-02     .7306E-02     .8334E-02     .9791E-02
+                        16.00        -.6162E-02    -.5645E-02    -.5221E-02    -.2097E-02      .000         .2423E-02     .8018E-02     .9128E-02     .1070E-01
+                        18.00        -.7139E-02    -.6502E-02    -.5988E-02    -.2359E-02      .000         .2685E-02     .8785E-02     .9984E-02     .1167E-01
+                        19.00        -.7690E-02    -.6985E-02    -.6421E-02    -.2507E-02      .000         .2833E-02     .9218E-02     .1047E-01     .1223E-01
+                        20.00        -.8237E-02    -.7464E-02    -.6851E-02    -.2653E-02      .000         .2979E-02     .9648E-02     .1095E-01     .1277E-01
+                        21.00        -.8787E-02    -.7946E-02    -.7283E-02    -.2801E-02      .000         .3127E-02     .1008E-01     .1143E-01     .1332E-01
+                        22.00        -.9350E-02    -.8439E-02    -.7724E-02    -.2952E-02      .000         .3278E-02     .1052E-01     .1192E-01     .1389E-01
+                        24.00        -.1053E-01    -.9470E-02    -.8648E-02    -.3267E-02      .000         .3593E-02     .1145E-01     .1295E-01     .1506E-01
+                  </tableData>
+               </table>
+            </product>
+         </function>
 
-    <function name="aero/force/Drag_induced">
-       <description>Induced drag</description>
-         <product>
-           <property>aero/qbar-psf</property>
-           <property>metrics/Sw-sqft</property>
-           <property>aero/cl-squared</property>
-           <value>0.043</value>
-         </product>
-    </function>
+         <function name="aero/coefficient/CdDf1R">
+            <description>
+               Drag Coefficient due to Right Plain Flaps Deflection
+               Positive surface deflection is trailing edge down
+               Ultimately, we will feed this right flap pos
+            </description>
+            <product>
+               <property>aero/qbar-psf</property>
+               <property>metrics/Sw-sqft</property>
+               <table>
+                  <independentVar lookup="row">aero/alpha-deg</independentVar>
+                  <independentVar lookup="column">fcs/flap-pos-deg</independentVar>
+                  <tableData>
+                                     -30.00        -20.00        -15.00        -5.000          .000         5.000         15.00         20.00         30.00    
+                       -16.00         .8676E-02     .7357E-02     .6430E-02     .1881E-02      .000        -.1555E-02    -.3633E-02    -.3874E-02    -.4140E-02
+                       -8.000         .4879E-02     .4029E-02     .3449E-02     .8630E-03      .000        -.5370E-03    -.6519E-03    -.5465E-03    -.3431E-03
+                       -6.000         .4012E-02     .3270E-02     .2768E-02     .6307E-03      .000        -.3047E-03     .2841E-04     .2126E-03     .5232E-03
+                       -4.000         .3161E-02     .2524E-02     .2100E-02     .4024E-03      .000        -.7643E-04     .6971E-03     .9589E-03     .1375E-02
+                       -2.000         .2330E-02     .1796E-02     .1447E-02     .1797E-03      .000         .1463E-03     .1349E-02     .1687E-02     .2205E-02
+                         .000         .1501E-02     .1070E-02     .7966E-03    -.4246E-04      .000         .3685E-03     .2000E-02     .2413E-02     .3034E-02
+                        2.000         .6536E-03     .3269E-03     .1308E-03    -.2698E-03      .000         .5958E-03     .2666E-02     .3156E-02     .3882E-02
+                        4.000        -.2413E-03    -.4572E-03    -.5719E-03    -.5097E-03      .000         .8357E-03     .3369E-02     .3940E-02     .4777E-02
+                        8.000        -.2236E-02    -.2205E-02    -.2138E-02    -.1044E-02      .000         .1370E-02     .4935E-02     .5688E-02     .6771E-02
+                        9.000        -.2760E-02    -.2665E-02    -.2550E-02    -.1185E-02      .000         .1511E-02     .5347E-02     .6148E-02     .7296E-02
+                        10.00        -.3278E-02    -.3118E-02    -.2956E-02    -.1324E-02      .000         .1650E-02     .5753E-02     .6601E-02     .7813E-02
+                        12.00        -.4288E-02    -.4003E-02    -.3750E-02    -.1595E-02      .000         .1921E-02     .6546E-02     .7486E-02     .8823E-02
+                        14.00        -.5256E-02    -.4851E-02    -.4509E-02    -.1854E-02      .000         .2180E-02     .7306E-02     .8334E-02     .9791E-02
+                        16.00        -.6162E-02    -.5645E-02    -.5221E-02    -.2097E-02      .000         .2423E-02     .8018E-02     .9128E-02     .1070E-01
+                        18.00        -.7139E-02    -.6502E-02    -.5988E-02    -.2359E-02      .000         .2685E-02     .8785E-02     .9984E-02     .1167E-01
+                        19.00        -.7690E-02    -.6985E-02    -.6421E-02    -.2507E-02      .000         .2833E-02     .9218E-02     .1047E-01     .1223E-01
+                        20.00        -.8237E-02    -.7464E-02    -.6851E-02    -.2653E-02      .000         .2979E-02     .9648E-02     .1095E-01     .1277E-01
+                        21.00        -.8787E-02    -.7946E-02    -.7283E-02    -.2801E-02      .000         .3127E-02     .1008E-01     .1143E-01     .1332E-01
+                        22.00        -.9350E-02    -.8439E-02    -.7724E-02    -.2952E-02      .000         .3278E-02     .1052E-01     .1192E-01     .1389E-01
+                        24.00        -.1053E-01    -.9470E-02    -.8648E-02    -.3267E-02      .000         .3593E-02     .1145E-01     .1295E-01     .1506E-01
+                  </tableData>
+               </table>
+            </product>
+         </function>
+
+         <function name="aero/coefficient/CdDf11L">
+            <description>
+               Drag Coefficient due to Left Plain Flaps Deflection
+               Positive surface deflection is trailing edge down
+               Ultimately, we will feed this left flap pos
+            </description>
+            <product>
+               <property>aero/qbar-psf</property>
+               <property>metrics/Sw-sqft</property>
+               <table>
+                  <independentVar lookup="row">aero/alpha-deg</independentVar>
+                  <independentVar lookup="column">fcs/flap-pos-deg</independentVar>
+                  <tableData>
+                                      30.00         20.00         15.00         5.000          .000        -5.000        -15.00        -20.00        -30.00    
+                       -16.00         .8619E-02     .7309E-02     .6389E-02     .1870E-02      .000        -.1547E-02    -.3618E-02    -.3858E-02    -.4125E-02
+                       -8.000         .4846E-02     .4003E-02     .3426E-02     .8582E-03      .000        -.5352E-03    -.6551E-03    -.5518E-03    -.3517E-03
+                       -6.000         .3984E-02     .3247E-02     .2749E-02     .6271E-03      .000        -.3041E-03     .2173E-04     .2035E-03     .5102E-03
+                       -4.000         .3136E-02     .2505E-02     .2084E-02     .3999E-03      .000        -.7688E-04     .6873E-03     .9463E-03     .1358E-02
+                       -2.000         .2309E-02     .1780E-02     .1434E-02     .1781E-03      .000         .1449E-03     .1337E-02     .1671E-02     .2185E-02
+                         .000         .1483E-02     .1056E-02     .7857E-03    -.4329E-04      .000         .3663E-03     .1985E-02     .2395E-02     .3011E-02
+                        2.000         .6379E-03     .3154E-03     .1220E-03    -.2699E-03      .000         .5929E-03     .2649E-02     .3135E-02     .3856E-02
+                        4.000        -.2545E-03    -.4666E-03    -.5787E-03    -.5091E-03      .000         .8321E-03     .3350E-02     .3917E-02     .4748E-02
+                        8.000        -.2242E-02    -.2208E-02    -.2140E-02    -.1042E-02      .000         .1365E-02     .4911E-02     .5659E-02     .6736E-02
+                        9.000        -.2765E-02    -.2667E-02    -.2550E-02    -.1182E-02      .000         .1505E-02     .5321E-02     .6118E-02     .7259E-02
+                        10.00        -.3281E-02    -.3119E-02    -.2955E-02    -.1320E-02      .000         .1643E-02     .5726E-02     .6569E-02     .7775E-02
+                        12.00        -.4288E-02    -.4002E-02    -.3746E-02    -.1591E-02      .000         .1914E-02     .6518E-02     .7453E-02     .8782E-02
+                        14.00        -.5254E-02    -.4848E-02    -.4505E-02    -.1850E-02      .000         .2173E-02     .7276E-02     .8299E-02     .9748E-02
+                        16.00        -.6159E-02    -.5641E-02    -.5215E-02    -.2092E-02      .000         .2415E-02     .7986E-02     .9092E-02     .1065E-01
+                        18.00        -.7099E-02    -.6464E-02    -.5953E-02    -.2344E-02      .000         .2667E-02     .8725E-02     .9915E-02     .1159E-01
+                        19.00        -.7646E-02    -.6944E-02    -.6383E-02    -.2491E-02      .000         .2814E-02     .9154E-02     .1039E-01     .1214E-01
+                        20.00        -.8189E-02    -.7420E-02    -.6810E-02    -.2636E-02      .000         .2959E-02     .9581E-02     .1087E-01     .1268E-01
+                        21.00        -.8735E-02    -.7898E-02    -.7238E-02    -.2783E-02      .000         .3106E-02     .1001E-01     .1135E-01     .1323E-01
+                        22.00        -.9293E-02    -.8387E-02    -.7676E-02    -.2932E-02      .000         .3255E-02     .1045E-01     .1184E-01     .1379E-01
+                        24.00        -.1046E-01    -.9410E-02    -.8593E-02    -.3245E-02      .000         .3568E-02     .1136E-01     .1286E-01     .1495E-01
+                  </tableData>
+               </table>
+            </product>
+         </function>
+
+         <function name="aero/coefficient/CdDf11R">
+            <description>
+               Drag Coefficient due to Right Plain Flaps Deflection
+               Positive surface deflection is trailing edge down
+               Ultimately, we will feed this right flap pos
+            </description>
+            <product>
+               <property>aero/qbar-psf</property>
+               <property>metrics/Sw-sqft</property>
+               <table>
+                  <independentVar lookup="row">aero/alpha-deg</independentVar>
+                  <independentVar lookup="column">fcs/flap-pos-deg</independentVar>
+                  <tableData>
+                                      30.00         20.00         15.00         5.000          .000        -5.000        -15.00        -20.00        -30.00    
+                       -16.00         .8619E-02     .7309E-02     .6389E-02     .1870E-02      .000        -.1547E-02    -.3618E-02    -.3858E-02    -.4125E-02
+                       -8.000         .4846E-02     .4003E-02     .3426E-02     .8582E-03      .000        -.5352E-03    -.6551E-03    -.5518E-03    -.3517E-03
+                       -6.000         .3984E-02     .3247E-02     .2749E-02     .6271E-03      .000        -.3041E-03     .2173E-04     .2035E-03     .5102E-03
+                       -4.000         .3136E-02     .2505E-02     .2084E-02     .3999E-03      .000        -.7688E-04     .6873E-03     .9463E-03     .1358E-02
+                       -2.000         .2309E-02     .1780E-02     .1434E-02     .1781E-03      .000         .1449E-03     .1337E-02     .1671E-02     .2185E-02
+                         .000         .1483E-02     .1056E-02     .7857E-03    -.4329E-04      .000         .3663E-03     .1985E-02     .2395E-02     .3011E-02
+                        2.000         .6379E-03     .3154E-03     .1220E-03    -.2699E-03      .000         .5929E-03     .2649E-02     .3135E-02     .3856E-02
+                        4.000        -.2545E-03    -.4666E-03    -.5787E-03    -.5091E-03      .000         .8321E-03     .3350E-02     .3917E-02     .4748E-02
+                        8.000        -.2242E-02    -.2208E-02    -.2140E-02    -.1042E-02      .000         .1365E-02     .4911E-02     .5659E-02     .6736E-02
+                        9.000        -.2765E-02    -.2667E-02    -.2550E-02    -.1182E-02      .000         .1505E-02     .5321E-02     .6118E-02     .7259E-02
+                        10.00        -.3281E-02    -.3119E-02    -.2955E-02    -.1320E-02      .000         .1643E-02     .5726E-02     .6569E-02     .7775E-02
+                        12.00        -.4288E-02    -.4002E-02    -.3746E-02    -.1591E-02      .000         .1914E-02     .6518E-02     .7453E-02     .8782E-02
+                        14.00        -.5254E-02    -.4848E-02    -.4505E-02    -.1850E-02      .000         .2173E-02     .7276E-02     .8299E-02     .9748E-02
+                        16.00        -.6159E-02    -.5641E-02    -.5215E-02    -.2092E-02      .000         .2415E-02     .7986E-02     .9092E-02     .1065E-01
+                        18.00        -.7099E-02    -.6464E-02    -.5953E-02    -.2344E-02      .000         .2667E-02     .8725E-02     .9915E-02     .1159E-01
+                        19.00        -.7646E-02    -.6944E-02    -.6383E-02    -.2491E-02      .000         .2814E-02     .9154E-02     .1039E-01     .1214E-01
+                        20.00        -.8189E-02    -.7420E-02    -.6810E-02    -.2636E-02      .000         .2959E-02     .9581E-02     .1087E-01     .1268E-01
+                        21.00        -.8735E-02    -.7898E-02    -.7238E-02    -.2783E-02      .000         .3106E-02     .1001E-01     .1135E-01     .1323E-01
+                        22.00        -.9293E-02    -.8387E-02    -.7676E-02    -.2932E-02      .000         .3255E-02     .1045E-01     .1184E-01     .1379E-01
+                        24.00        -.1046E-01    -.9410E-02    -.8593E-02    -.3245E-02      .000         .3568E-02     .1136E-01     .1286E-01     .1495E-01
+                  </tableData>
+               </table>
+            </product>
+         </function>
+
+         <function name="aero/coefficient/CdDf12L">
+            <description>
+               Drag Coefficient due to Left Plain Flaps Deflection
+               Positive surface deflection is trailing edge down
+               Ultimately, we will feed this left flap pos
+            </description>
+            <product>
+               <property>aero/qbar-psf</property>
+               <property>metrics/Sw-sqft</property>
+               <table>
+                  <independentVar lookup="row">aero/alpha-deg</independentVar>
+                  <independentVar lookup="column">fcs/flap-pos-deg</independentVar>
+                  <tableData>
+                                      30.00         20.00         15.00         5.000          .000        -5.000        -15.00        -20.00        -30.00    
+                       -16.00         .7101E-02     .6044E-02     .5298E-02     .1581E-02      .000        -.1344E-02    -.3267E-02    -.3515E-02    -.3807E-02
+                       -8.000         .3871E-02     .3214E-02     .2762E-02     .7147E-03      .000        -.4780E-03    -.7313E-03    -.6847E-03    -.5777E-03
+                       -6.000         .3133E-02     .2567E-02     .2183E-02     .5169E-03      .000        -.2802E-03    -.1520E-03    -.3825E-04     .1600E-03
+                       -4.000         .2408E-02     .1931E-02     .1613E-02     .3224E-03      .000        -.8569E-04     .4177E-03     .5975E-03     .8855E-03
+                       -2.000         .1700E-02     .1311E-02     .1057E-02     .1326E-03      .000         .1041E-03     .9737E-03     .1218E-02     .1594E-02
+                         .000         .9927E-03     .6915E-03     .5019E-03    -.5693E-04      .000         .2936E-03     .1529E-02     .1837E-02     .2300E-02
+                        2.000         .2693E-03     .5755E-04    -.6615E-04    -.2509E-03      .000         .4876E-03     .2097E-02     .2471E-02     .3024E-02
+                        4.000        -.4945E-03    -.6118E-03    -.6659E-03    -.4557E-03      .000         .6923E-03     .2697E-02     .3141E-02     .3788E-02
+                        8.000        -.2196E-02    -.2103E-02    -.2002E-02    -.9118E-03      .000         .1148E-02     .4033E-02     .4631E-02     .5489E-02
+                        9.000        -.2643E-02    -.2495E-02    -.2353E-02    -.1032E-02      .000         .1268E-02     .4384E-02     .5024E-02     .5936E-02
+                        10.00        -.3085E-02    -.2882E-02    -.2700E-02    -.1150E-02      .000         .1387E-02     .4731E-02     .5410E-02     .6378E-02
+                        12.00        -.3947E-02    -.3637E-02    -.3377E-02    -.1381E-02      .000         .1618E-02     .5408E-02     .6166E-02     .7240E-02
+                        14.00        -.4774E-02    -.4362E-02    -.4026E-02    -.1603E-02      .000         .1840E-02     .6057E-02     .6891E-02     .8067E-02
+                        16.00        -.5548E-02    -.5040E-02    -.4634E-02    -.1811E-02      .000         .2047E-02     .6665E-02     .7569E-02     .8841E-02
+                        18.00        -.6353E-02    -.5746E-02    -.5266E-02    -.2026E-02      .000         .2263E-02     .7297E-02     .8274E-02     .9646E-02
+                        19.00        -.6821E-02    -.6156E-02    -.5634E-02    -.2152E-02      .000         .2388E-02     .7665E-02     .8685E-02     .1011E-01
+                        20.00        -.7286E-02    -.6563E-02    -.5999E-02    -.2276E-02      .000         .2513E-02     .8030E-02     .9092E-02     .1058E-01
+                        21.00        -.7753E-02    -.6972E-02    -.6366E-02    -.2402E-02      .000         .2638E-02     .8396E-02     .9501E-02     .1105E-01
+                        22.00        -.8231E-02    -.7391E-02    -.6741E-02    -.2530E-02      .000         .2766E-02     .8771E-02     .9920E-02     .1152E-01
+                        24.00        -.9230E-02    -.8266E-02    -.7525E-02    -.2797E-02      .000         .3034E-02     .9556E-02     .1080E-01     .1252E-01
+                  </tableData>
+               </table>
+            </product>
+         </function>
+
+         <function name="aero/coefficient/CdDf12R">
+            <description>
+               Drag Coefficient due to Right Plain Flaps Deflection
+               Positive surface deflection is trailing edge down
+               Ultimately, we will feed this right flap pos
+            </description>
+            <product>
+               <property>aero/qbar-psf</property>
+               <property>metrics/Sw-sqft</property>
+               <table>
+                  <independentVar lookup="row">aero/alpha-deg</independentVar>
+                  <independentVar lookup="column">fcs/flap-pos-deg</independentVar>
+                  <tableData>
+                                      30.00         20.00         15.00         5.000          .000        -5.000        -15.00        -20.00        -30.00    
+                       -16.00         .7101E-02     .6044E-02     .5298E-02     .1581E-02      .000        -.1344E-02    -.3267E-02    -.3515E-02    -.3807E-02
+                       -8.000         .3871E-02     .3214E-02     .2762E-02     .7147E-03      .000        -.4780E-03    -.7313E-03    -.6847E-03    -.5777E-03
+                       -6.000         .3133E-02     .2567E-02     .2183E-02     .5169E-03      .000        -.2802E-03    -.1520E-03    -.3825E-04     .1600E-03
+                       -4.000         .2408E-02     .1931E-02     .1613E-02     .3224E-03      .000        -.8569E-04     .4177E-03     .5975E-03     .8855E-03
+                       -2.000         .1700E-02     .1311E-02     .1057E-02     .1326E-03      .000         .1041E-03     .9737E-03     .1218E-02     .1594E-02
+                         .000         .9927E-03     .6915E-03     .5019E-03    -.5693E-04      .000         .2936E-03     .1529E-02     .1837E-02     .2300E-02
+                        2.000         .2693E-03     .5755E-04    -.6615E-04    -.2509E-03      .000         .4876E-03     .2097E-02     .2471E-02     .3024E-02
+                        4.000        -.4945E-03    -.6118E-03    -.6659E-03    -.4557E-03      .000         .6923E-03     .2697E-02     .3141E-02     .3788E-02
+                        8.000        -.2196E-02    -.2103E-02    -.2002E-02    -.9118E-03      .000         .1148E-02     .4033E-02     .4631E-02     .5489E-02
+                        9.000        -.2643E-02    -.2495E-02    -.2353E-02    -.1032E-02      .000         .1268E-02     .4384E-02     .5024E-02     .5936E-02
+                        10.00        -.3085E-02    -.2882E-02    -.2700E-02    -.1150E-02      .000         .1387E-02     .4731E-02     .5410E-02     .6378E-02
+                        12.00        -.3947E-02    -.3637E-02    -.3377E-02    -.1381E-02      .000         .1618E-02     .5408E-02     .6166E-02     .7240E-02
+                        14.00        -.4774E-02    -.4362E-02    -.4026E-02    -.1603E-02      .000         .1840E-02     .6057E-02     .6891E-02     .8067E-02
+                        16.00        -.5548E-02    -.5040E-02    -.4634E-02    -.1811E-02      .000         .2047E-02     .6665E-02     .7569E-02     .8841E-02
+                        18.00        -.6353E-02    -.5746E-02    -.5266E-02    -.2026E-02      .000         .2263E-02     .7297E-02     .8274E-02     .9646E-02
+                        19.00        -.6821E-02    -.6156E-02    -.5634E-02    -.2152E-02      .000         .2388E-02     .7665E-02     .8685E-02     .1011E-01
+                        20.00        -.7286E-02    -.6563E-02    -.5999E-02    -.2276E-02      .000         .2513E-02     .8030E-02     .9092E-02     .1058E-01
+                        21.00        -.7753E-02    -.6972E-02    -.6366E-02    -.2402E-02      .000         .2638E-02     .8396E-02     .9501E-02     .1105E-01
+                        22.00        -.8231E-02    -.7391E-02    -.6741E-02    -.2530E-02      .000         .2766E-02     .8771E-02     .9920E-02     .1152E-01
+                        24.00        -.9230E-02    -.8266E-02    -.7525E-02    -.2797E-02      .000         .3034E-02     .9556E-02     .1080E-01     .1252E-01
+                  </tableData>
+               </table>
+            </product>
+         </function>
+
+         <function name="aero/coefficient/CdDe">
+            <description>
+               Drag Coefficient due to Elevator Deflection
+               Positive surface deflection is trailing edge down
+            </description>
+            <product>
+               <property>aero/qbar-psf</property>
+               <property>metrics/Sw-sqft</property>
+               <table>
+                  <independentVar lookup="row">aero/alpha-deg</independentVar>
+                  <independentVar lookup="column">fcs/elevator-pos-deg</independentVar>
+                  <tableData>
+                                     -30.00        -20.00        -15.00        -5.000          .000         5.000         15.00         20.00         30.00    
+                       -16.00         .1420E-01     .1209E-01     .1060E-01     .3161E-02    -.5851E-05    -.2688E-02    -.6535E-02    -.7030E-02    -.7615E-02
+                       -8.000         .7742E-02     .6427E-02     .5524E-02     .1429E-02    -.2384E-05    -.9559E-03    -.1463E-02    -.1369E-02    -.1155E-02
+                       -6.000         .6266E-02     .5134E-02     .4365E-02     .1034E-02    -.1594E-05    -.5604E-03    -.3040E-03    -.7650E-04     .3200E-03
+                       -4.000         .4815E-02     .3863E-02     .3226E-02     .6448E-03    -.8152E-06    -.1714E-03     .8354E-03     .1195E-02     .1771E-02
+                       -2.000         .3399E-02     .2622E-02     .2114E-02     .2651E-03    -.5589E-07     .2083E-03     .1947E-02     .2436E-02     .3187E-02
+                         .000         .1985E-02     .1383E-02     .1004E-02    -.1139E-03     .7021E-06     .5873E-03     .3057E-02     .3675E-02     .4601E-02
+                        2.000         .5387E-03     .1151E-03    -.1323E-03    -.5018E-03     .1478E-05     .9751E-03     .4194E-02     .4943E-02     .6048E-02
+                        4.000        -.9889E-03    -.1224E-02    -.1332E-02    -.9113E-03     .2297E-05     .1385E-02     .5393E-02     .6281E-02     .7575E-02
+                        8.000        -.4391E-02    -.4205E-02    -.4004E-02    -.1824E-02     .4121E-05     .2297E-02     .8065E-02     .9263E-02     .1098E-01
+                        9.000        -.5287E-02    -.4990E-02    -.4707E-02    -.2064E-02     .4601E-05     .2537E-02     .8768E-02     .1005E-01     .1187E-01
+                        10.00        -.6170E-02    -.5763E-02    -.5400E-02    -.2300E-02     .5076E-05     .2774E-02     .9461E-02     .1082E-01     .1276E-01
+                        12.00        -.7895E-02    -.7275E-02    -.6755E-02    -.2763E-02     .5996E-05     .3236E-02     .1082E-01     .1233E-01     .1448E-01
+                        14.00        -.9548E-02    -.8724E-02    -.8053E-02    -.3206E-02     .6886E-05     .3679E-02     .1211E-01     .1378E-01     .1613E-01
+                        16.00        -.1110E-01    -.1008E-01    -.9269E-02    -.3621E-02     .7723E-05     .4094E-02     .1333E-01     .1514E-01     .1768E-01
+                        18.00        -.1271E-01    -.1149E-01    -.1053E-01    -.4053E-02     .8570E-05     .4526E-02     .1459E-01     .1655E-01     .1929E-01
+                        19.00        -.1364E-01    -.1231E-01    -.1127E-01    -.4304E-02     .9082E-05     .4777E-02     .1533E-01     .1737E-01     .2023E-01
+                        20.00        -.1457E-01    -.1313E-01    -.1200E-01    -.4553E-02     .9583E-05     .5026E-02     .1606E-01     .1818E-01     .2116E-01
+                        21.00        -.1551E-01    -.1394E-01    -.1273E-01    -.4803E-02     .1008E-04     .5277E-02     .1679E-01     .1900E-01     .2209E-01
+                        22.00        -.1646E-01    -.1478E-01    -.1348E-01    -.5059E-02     .1060E-04     .5533E-02     .1754E-01     .1984E-01     .2305E-01
+                        24.00        -.1846E-01    -.1653E-01    -.1505E-01    -.5595E-02     .1168E-04     .6068E-02     .1911E-01     .2159E-01     .2505E-01
+                  </tableData>
+               </table>
+            </product>
+         </function>
+
 
     <function name="aero/force/Drag_mach">
        <description>Drag due to mach</description>
@@ -870,16 +1170,6 @@
             </tableData>
           </table>
         </product>
-    </function>
-
-    <function name="aero/force/Drag_flap">
-       <description>Drag due to flaps</description>
-         <product>
-           <property>aero/qbar-psf</property>
-           <property>metrics/Sw-sqft</property>
-           <property>fcs/flap-pos-deg</property>
-           <value> 0.00197 </value>
-         </product>
     </function>
 
     <function name="aero/force/Drag_gear">
@@ -920,79 +1210,299 @@
        </product>
     </function>
 
-    <function name="aero/force/Drag_elevator">
-       <description>Drag due to Elevator Deflection</description>
-       <product>
-           <property>aero/qbar-psf</property>
-           <property>metrics/Sw-sqft</property>
-           <abs><property>fcs/elevator-pos-norm</property></abs>
-           <value>0.04</value>
-       </product>
-    </function>
-
   </axis>
 
   <axis name="SIDE">
 
-    <function name="aero/force/Side_beta">
-       <description>Side force due to beta</description>
-       <product>
-           <property>aero/qbar-psf</property>
-           <property>metrics/Sw-sqft</property>
-           <property>aero/beta-rad</property>
-           <value>-1</value>
-       </product>
-    </function>
+         <function name="aero/coefficient/Cyb">
+            <description>
+               Side Force coefficient due to Sideslip(per degree)
+                Contributes to damping of Dutch Roll mode
+            </description>
+            <product>
+               <property>aero/qbar-psf</property>
+               <property>metrics/Sw-sqft</property>
+               <property>aero/beta-deg</property>
+               <table>
+                  <independentVar lookup="row">aero/alpha-deg</independentVar>
+                  <tableData>
+                       -16.00        -.3074E-01
+                       -8.000        -.3074E-01
+                       -6.000        -.3074E-01
+                       -4.000        -.3074E-01
+                       -2.000        -.3074E-01
+                         .000        -.3074E-01
+                        2.000        -.3074E-01
+                        4.000        -.3074E-01
+                        8.000        -.3074E-01
+                        9.000        -.3074E-01
+                        10.00        -.3074E-01
+                        12.00        -.3074E-01
+                        14.00        -.3074E-01
+                        16.00        -.3074E-01
+                        18.00        -.3074E-01
+                        19.00        -.3074E-01
+                        20.00        -.3074E-01
+                        21.00        -.3074E-01
+                        22.00        -.3074E-01
+                        24.00        -.3074E-01
+                  </tableData>
+               </table>
+            </product>
+         </function>
+
+         <function name="aero/coefficient/Cyp">
+            <description>
+               Side Force Coefficient due to Roll Rate(per degree)
+            </description>
+            <product>
+               <property>velocities/p-aero-rad_sec</property>
+               <value>57.29577951</value>
+               <property>aero/qbar-psf</property>
+               <property>metrics/Sw-sqft</property>
+               <property>aero/bi2vel</property>
+               <table>
+                  <independentVar lookup="row">aero/alpha-deg</independentVar>
+                  <tableData>
+                       -16.00        -.3854E-02
+                       -8.000        -.2291E-02
+                       -6.000        -.1892E-02
+                       -4.000        -.1485E-02
+                       -2.000        -.1071E-02
+                         .000        -.6527E-03
+                        2.000        -.2012E-03
+                        4.000         .2867E-03
+                        8.000         .1401E-02
+                        9.000         .1695E-02
+                        10.00         .2003E-02
+                        12.00         .2600E-02
+                        14.00         .3173E-02
+                        16.00         .3741E-02
+                        18.00         .4300E-02
+                        19.00         .4579E-02
+                        20.00         .4859E-02
+                        21.00         .5143E-02
+                        22.00         .5425E-02
+                        24.00         .5987E-02
+                  </tableData>
+               </table>
+            </product>
+         </function>
+	 
+         <function name="aero/coefficient/Cyr">
+            <description>
+               Side Force due to Yaw Rate(the effect is small, just guess a tiny number)
+            </description>
+            <product>
+               <property>velocities/r-aero-rad_sec</property>
+               <property>aero/qbar-psf</property>
+               <property>metrics/Sw-sqft</property>
+               <property>aero/bi2vel</property>
+               <value>    0.01    </value>
+            </product>
+         </function>
+
+	 <function name="aero/coefficient/CyDr">
+            <description>
+               Side Force due to rudder(guess a table)
+            </description>
+            <product>
+               <property>aero/qbar-psf</property>
+               <property>metrics/Sw-sqft</property>
+               <property>fcs/rudder-pos-deg</property>
+               <table>
+		 <independentVar lookup="row">velocities/mach</independentVar>
+		 <tableData>
+                   0.00      0.000
+                   0.20      0.01
+                   0.40      0.02
+                   0.60      0.03
+                   0.80      0.04
+		 </tableData>
+               </table>
+            </product>
+         </function>
+
+	 <function name="aero/coefficient/CyDa">
+            <description>
+               Side Force due to aileron(Neglected it)
+            </description>
+            <product>
+               <property>aero/qbar-psf</property>
+               <property>metrics/Sw-sqft</property>
+               <property>fcs/left-aileron-pos-deg</property>
+               <value>    0.000    </value>
+            </product>
+         </function>
 
   </axis>
 
   <axis name="ROLL">
 
-    <function name="aero/moment/Roll_beta">
-       <description>Roll moment due to beta</description>
-       <product>
-           <property>aero/qbar-psf</property>
-           <property>metrics/Sw-sqft</property>
-           <property>metrics/bw-ft</property>
-           <property>aero/beta-rad</property>
-           <value>-0.1</value>
-       </product>
-    </function>
+         <function name="aero/coefficient/Clb">
+            <description>
+               Roll Moment coefficient due to Beta(per degree)
+               Decrease of Clb to small negative value improves Dutch Roll Damping
+               High Positive value leads to excessive spiral instability
+            </description>
+            <product>
+               <property>aero/qbar-psf</property>
+               <property>metrics/Sw-sqft</property>
+               <property>metrics/bw-ft</property>
+               <property>aero/beta-deg</property>
+               <table>
+                  <independentVar lookup="row">aero/alpha-deg</independentVar>
+                  <tableData>
+                       -16.00        -.4626E-02
+                       -8.000        -.3819E-02
+                       -6.000        -.3618E-02
+                       -4.000        -.3415E-02
+                       -2.000        -.3208E-02
+                         .000        -.2998E-02
+                        2.000        -.2773E-02
+                        4.000        -.2531E-02
+                        8.000        -.1994E-02
+                        9.000        -.1855E-02
+                        10.00        -.1712E-02
+                        12.00        -.1437E-02
+                        14.00        -.1167E-02
+                        16.00        -.9034E-03
+                        18.00        -.6439E-03
+                        19.00        -.5154E-03
+                        20.00        -.3866E-03
+                        21.00        -.2574E-03
+                        22.00        -.1289E-03
+                        24.00         .1259E-03
+                  </tableData>
+               </table>
+            </product>
+         </function>
 
-    <function name="aero/moment/Roll_damp">
-       <description>Roll moment due to roll rate</description>
-       <product>
-           <property>aero/qbar-psf</property>
-           <property>metrics/Sw-sqft</property>
-           <property>metrics/bw-ft</property>
-           <property>aero/bi2vel</property>
-           <property>velocities/p-aero-rad_sec</property>
-           <value>-0.4</value>
-       </product>
-    </function>
+         <function name="aero/coefficient/Clp">
+            <description>
+               Roll Moment coefficient due to roll rate(per degree)
+               Clp alone determines damping-in-roll characteristics
+            </description>
+            <product>
+               <property>aero/qbar-psf</property>
+               <property>metrics/Sw-sqft</property>
+               <property>metrics/bw-ft</property>
+               <property>aero/bi2vel</property>
+               <property>velocities/p-aero-rad_sec</property>
+               <table>
+                  <independentVar lookup="row">aero/alpha-deg</independentVar>
+                  <tableData>
+                       -16.00        -.8712E-02
+                       -8.000        -.9191E-02
+                       -6.000        -.9206E-02
+                       -4.000        -.9051E-02
+                       -2.000        -.8838E-02
+                         .000        -.7820E-02
+                        2.000        -.5985E-02
+                        4.000        -.4033E-02
+                        8.000        -.1184E-02
+                        9.000        -.7443E-03
+                        10.00        -.9470E-03
+                        12.00        -.2151E-02
+                        14.00        -.2616E-02
+                        16.00        -.2921E-02
+                        18.00        -.3058E-02
+                        19.00        -.2977E-02
+                        20.00        -.2845E-02
+                        21.00        -.2861E-02
+                        22.00        -.3005E-02
+                        24.00        -.3263E-02
+                  </tableData>
+               </table>
+            </product>
+         </function>
 
-    <function name="aero/moment/Roll_yaw">
-       <description>Roll moment due to yaw rate</description>
-       <product>
-           <property>aero/qbar-psf</property>
-           <property>metrics/Sw-sqft</property>
-           <property>metrics/bw-ft</property>
-           <property>aero/bi2vel</property>
-           <property>velocities/r-aero-rad_sec</property>
-           <value>0.15</value>
-       </product>
-    </function>
+         <function name="aero/coefficient/Clr">
+            <description>
+               Roll Moment coefficient due to yaw rate(per degree)
+               Considerable effect on Spiral mode. Large 
+               positive values leads to strong sprial instability.
+            </description>
+            <product>
+               <property>aero/qbar-psf</property>
+               <property>metrics/Sw-sqft</property>
+               <property>metrics/bw-ft</property>
+               <property>aero/bi2vel</property>
+               <property>velocities/r-aero-rad_sec</property>
+               <table>
+                  <independentVar lookup="row">aero/alpha-deg</independentVar>
+                  <tableData>
+                       -16.00        -.2663E-03
+                       -8.000         .2242E-02
+                       -6.000         .2900E-02
+                       -4.000         .3544E-02
+                       -2.000         .4168E-02
+                         .000         .4764E-02
+                        2.000         .5181E-02
+                        4.000         .5411E-02
+                        8.000         .5263E-02
+                        9.000         .5173E-02
+                        10.00         .5058E-02
+                        12.00         .4952E-02
+                        14.00         .4903E-02
+                        16.00         .4872E-02
+                        18.00         .4863E-02
+                        19.00         .4853E-02
+                        20.00         .4833E-02
+                        21.00         .4805E-02
+                        22.00         .4781E-02
+                        24.00         .4745E-02
+                  </tableData>
+               </table>
+            </product>
+         </function>
 
-    <function name="aero/moment/Roll_aileron">
-       <description>Roll moment due to aileron</description>
-       <product>
-          <property>aero/qbar-psf</property>
-          <property>metrics/Sw-sqft</property>
-          <property>metrics/bw-ft</property>
-          <property>fcs/left-aileron-pos-rad</property>
-          <value>0.1</value>
-       </product>
-    </function>
+         <function name="aero/coefficient/CldF1">
+            <description>
+               Roll Moment Coefficient due to Asymetrical Plain Flaps Deflection
+               calculated as difference between left and right flap lift coef,
+               times distance from centerline to MAC of surface.
+            </description>
+            <product>
+               <value>      3.52</value>
+               <difference>
+                  <property>aero/coefficient/CLdF1R</property>
+                  <property>aero/coefficient/CLdF1L</property>
+               </difference>
+            </product>
+         </function>
+
+         <function name="aero/coefficient/CldF11">
+            <description>
+               Roll Moment Coefficient due to Asymetrical Plain Flaps Deflection
+               calculated as difference between left and right flap lift coef,
+               times distance from centerline to MAC of surface.
+            </description>
+            <product>
+               <value>      3.52</value>
+               <difference>
+                  <property>aero/coefficient/CLdF11R</property>
+                  <property>aero/coefficient/CLdF11L</property>
+               </difference>
+            </product>
+         </function>
+
+         <function name="aero/coefficient/CldF12">
+            <description>
+               Roll Moment Coefficient due to Asymetrical Plain Flaps Deflection
+               calculated as difference between left and right flap lift coef,
+               times distance from centerline to MAC of surface.
+            </description>
+            <product>
+               <value>      3.52</value>
+               <difference>
+                  <property>aero/coefficient/CLdF12R</property>
+                  <property>aero/coefficient/CLdF12L</property>
+               </difference>
+            </product>
+         </function>
+
+
 
     <function name="aero/moment/Roll_rudder">
        <description>Roll moment due to rudder</description>
@@ -1009,62 +1519,396 @@
 
   <axis name="PITCH">
 
-    <function name="aero/moment/Pitch_alpha">
-       <description>Pitch moment due to alpha</description>
-       <product>
-           <property>aero/qbar-psf</property>
-           <property>metrics/Sw-sqft</property>
-           <property>metrics/cbarw-ft</property>
-           <property>aero/alpha-rad</property>
-           <value>-0.6</value>
-       </product>
-    </function>
+         <function name="aero/coefficient/Cm_basic">
+            <description>
+               Basic_Pitch_moment_coefficient
+            </description>
+            <product>
+               <property>aero/qbar-psf</property>
+               <property>metrics/Sw-sqft</property>
+               <property>metrics/cbarw-ft</property>
+               <table>
+                  <independentVar lookup="row">aero/alpha-deg</independentVar>
+                  <tableData>
+                       -16.00         .7478    
+                       -8.000         .7720    
+                       -6.000         .7127    
+                       -4.000         .6431    
+                       -2.000         .5665    
+                         .000         .4807    
+                        2.000         .3782    
+                        4.000         .2546    
+                        8.000        -.6993E-01
+                        9.000          .000    
+                        10.00          .000    
+                        12.00          .000    
+                        14.00          .000    
+                        16.00          .000    
+                        18.00          .000    
+                        19.00          .000    
+                        20.00          .000    
+                        21.00          .000    
+                        22.00          .000    
+                        24.00          .000    
+                  </tableData>
+               </table>
+            </product>
+         </function>
 
-    <function name="aero/moment/Pitch_elevator">
-       <description>Pitch moment due to elevator</description>
-       <product>
-          <property>aero/qbar-psf</property>
-          <property>metrics/Sw-sqft</property>
-          <property>metrics/cbarw-ft</property>
-          <property>fcs/elevator-pos-rad</property>
-          <table>
-            <independentVar lookup="row">velocities/mach</independentVar>
-            <tableData>
-              0.0     -1.200
-              2.0     -0.300
-            </tableData>
-          </table>
-       </product>
-    </function>
 
-    <function name="aero/moment/Pitch_damp">
-       <description>Pitch moment due to pitch rate</description>
-       <product>
-           <property>aero/qbar-psf</property>
-           <property>metrics/Sw-sqft</property>
-           <property>metrics/cbarw-ft</property>
-           <property>aero/ci2vel</property>
-           <property>velocities/q-aero-rad_sec</property>
-           <value>-17</value>
-       </product>
-    </function>
+         <function name="aero/coefficient/CmDe">
+            <description>
+               Pitch moment coefficient due to elevator deflection
+               Positive surface deflection is trailing edge down
+            </description>
+            <product>
+               <property>aero/qbar-psf</property>
+               <property>metrics/Sw-sqft</property>
+               <property>metrics/cbarw-ft</property>
+               <table>
+                  <independentVar lookup="row">fcs/elevator-pos-deg</independentVar>
+                  <tableData>
+                       -30.00          .000    
+                       -20.00          .000    
+                       -15.00          .000    
+                       -5.000          .000    
+                         .000          .000    
+                        5.000          .000    
+                        15.00          .000    
+                        20.00          .000    
+                        30.00          .000    
+                  </tableData>
+               </table>
+            </product>
+         </function>
 
-    <function name="aero/moment/Pitch_alphadot">
-       <description>Pitch moment due to alpha rate</description>
-       <product>
-           <property>aero/qbar-psf</property>
-           <property>metrics/Sw-sqft</property>
-           <property>metrics/cbarw-ft</property>
-           <property>aero/ci2vel</property>
-           <property>aero/alphadot-rad_sec</property>
-           <value>-6</value>
-       </product>
-    </function>
+
+         <function name="aero/coefficient/Cmq">
+            <description>
+               Pitch moment coefficient due to pitch rate(per degree)
+                Pitch Damping Derivative
+               Very important to Short Period damping of oscillations
+            </description>
+            <product>
+               <property>aero/qbar-psf</property>
+               <property>metrics/Sw-sqft</property>
+               <property>metrics/cbarw-ft</property>
+               <property>aero/ci2vel</property>
+               <property>velocities/q-aero-rad_sec</property>
+               <table>
+                  <independentVar lookup="row">aero/alpha-deg</independentVar>
+                  <tableData>
+                       -16.00        -.2927    
+                       -8.000        -.2927    
+                       -6.000        -.2927    
+                       -4.000        -.2927    
+                       -2.000        -.2927    
+                         .000        -.2927    
+                        2.000        -.2927    
+                        4.000        -.2927    
+                        8.000        -.2927    
+                        9.000        -.2927    
+                        10.00        -.2927    
+                        12.00        -.2927    
+                        14.00        -.2927    
+                        16.00        -.2927    
+                        18.00        -.2927    
+                        19.00        -.2927    
+                        20.00        -.2927    
+                        21.00        -.2927    
+                        22.00        -.2927    
+                        24.00        -.2927    
+                  </tableData>
+               </table>
+            </product>
+         </function>
+
+
+         <function name="aero/coefficient/Cmadot">
+            <description>
+               Pitch moment coefficient due to AOA rate(per degree)
+               Negitive Cmad increase Short Period damping
+            </description>
+            <product>
+               <property>aero/qbar-psf</property>
+               <property>metrics/Sw-sqft</property>
+               <property>metrics/cbarw-ft</property>
+               <property>aero/ci2vel</property>
+               <property>aero/alphadot-deg_sec</property>
+               <table>
+                  <independentVar lookup="row">aero/alpha-deg</independentVar>
+                  <tableData>
+                       -16.00        -.6322E-01
+                       -8.000        -.7737E-01
+                       -6.000        -.8247E-01
+                       -4.000        -.8623E-01
+                       -2.000        -.8860E-01
+                         .000        -.8665E-01
+                        2.000        -.7942E-01
+                        4.000        -.6694E-01
+                        8.000        -.4320E-01
+                        9.000        -.4250E-01
+                        10.00        -.4579E-01
+                        12.00        -.5380E-01
+                        14.00        -.6499E-01
+                        16.00        -.6777E-01
+                        18.00        -.4163E-01
+                        19.00        -.3128E-01
+                        20.00        -.3159E-01
+                        21.00        -.2841E-01
+                        22.00        -.2140E-01
+                        24.00        -.1446E-01
+                  </tableData>
+               </table>
+            </product>
+         </function>
+         <function name="aero/coefficient/CmDf1L">
+            <description>
+               Pitch moment coefficient due to left Plain Flaps Deflection
+               Positive surface deflection is trailing edge down
+               Ultimately, we will feed this left flap pos
+            </description>
+            <product>
+               <property>aero/qbar-psf</property>
+               <property>metrics/Sw-sqft</property>
+               <property>metrics/cbarw-ft</property>
+               <table>
+                  <independentVar lookup="row">fcs/flap-pos-deg</independentVar>
+                  <tableData>
+                       -30.00         .3753    
+                       -20.00         .3274    
+                       -15.00         .2920    
+                       -5.000         .9955E-01
+                         .000          .000    
+                        5.000        -.9955E-01
+                        15.00        -.2920    
+                        20.00        -.3274    
+                        30.00        -.3754    
+                  </tableData>
+               </table>
+            </product>
+         </function>
+
+         <function name="aero/coefficient/CmDf1R">
+            <description>
+               Pitch moment coefficient due to right Plain Flaps Deflection
+               Positive surface deflection is trailing edge down
+               Ultimately, we will feed this right flap pos
+            </description>
+            <product>
+               <property>aero/qbar-psf</property>
+               <property>metrics/Sw-sqft</property>
+               <property>metrics/cbarw-ft</property>
+               <table>
+                  <independentVar lookup="row">fcs/flap-pos-deg</independentVar>
+                  <tableData>
+                       -30.00         .3753    
+                       -20.00         .3274    
+                       -15.00         .2920    
+                       -5.000         .9955E-01
+                         .000          .000    
+                        5.000        -.9955E-01
+                        15.00        -.2920    
+                        20.00        -.3274    
+                        30.00        -.3754    
+                  </tableData>
+               </table>
+            </product>
+         </function>
+
+         <function name="aero/coefficient/CmDf11L">
+            <description>
+               Pitch moment coefficient due to left Plain Flaps Deflection
+               Positive surface deflection is trailing edge down
+               Ultimately, we will feed this left flap pos
+            </description>
+            <product>
+               <property>aero/qbar-psf</property>
+               <property>metrics/Sw-sqft</property>
+               <property>metrics/cbarw-ft</property>
+               <table>
+                  <independentVar lookup="row">fcs/flap-pos-deg</independentVar>
+                  <tableData>
+                        30.00         .3735    
+                        20.00         .3259    
+                        15.00         .2906    
+                        5.000         .9908E-01
+                         .000          .000    
+                       -5.000        -.9908E-01
+                       -15.00        -.2906    
+                       -20.00        -.3259    
+                       -30.00        -.3736    
+                  </tableData>
+               </table>
+            </product>
+         </function>
+
+         <function name="aero/coefficient/CmDf11R">
+            <description>
+               Pitch moment coefficient due to right Plain Flaps Deflection
+               Positive surface deflection is trailing edge down
+               Ultimately, we will feed this right flap pos
+            </description>
+            <product>
+               <property>aero/qbar-psf</property>
+               <property>metrics/Sw-sqft</property>
+               <property>metrics/cbarw-ft</property>
+               <table>
+                  <independentVar lookup="row">fcs/flap-pos-deg</independentVar>
+                  <tableData>
+                        30.00         .3735    
+                        20.00         .3259    
+                        15.00         .2906    
+                        5.000         .9908E-01
+                         .000          .000    
+                       -5.000        -.9908E-01
+                       -15.00        -.2906    
+                       -20.00        -.3259    
+                       -30.00        -.3736    
+                  </tableData>
+               </table>
+            </product>
+         </function>
+
+         <function name="aero/coefficient/CmDf12L">
+            <description>
+               Pitch moment coefficient due to left Plain Flaps Deflection
+               Positive surface deflection is trailing edge down
+               Ultimately, we will feed this left flap pos
+            </description>
+            <product>
+               <property>aero/qbar-psf</property>
+               <property>metrics/Sw-sqft</property>
+               <property>metrics/cbarw-ft</property>
+               <table>
+                  <independentVar lookup="row">fcs/flap-pos-deg</independentVar>
+                  <tableData>
+                        30.00          .000    
+                        20.00          .000    
+                        15.00          .000    
+                        5.000          .000    
+                         .000          .000    
+                       -5.000          .000    
+                       -15.00          .000    
+                       -20.00          .000    
+                       -30.00          .000    
+                  </tableData>
+               </table>
+            </product>
+         </function>
+
+         <function name="aero/coefficient/CmDf12R">
+            <description>
+               Pitch moment coefficient due to right Plain Flaps Deflection
+               Positive surface deflection is trailing edge down
+               Ultimately, we will feed this right flap pos
+            </description>
+            <product>
+               <property>aero/qbar-psf</property>
+               <property>metrics/Sw-sqft</property>
+               <property>metrics/cbarw-ft</property>
+               <table>
+                  <independentVar lookup="row">fcs/flap-pos-deg</independentVar>
+                  <tableData>
+                        30.00          .000    
+                        20.00          .000    
+                        15.00          .000    
+                        5.000          .000    
+                         .000          .000    
+                       -5.000          .000    
+                       -15.00          .000    
+                       -20.00          .000    
+                       -30.00          .000    
+                  </tableData>
+               </table>
+            </product>
+         </function>
+
 
   </axis>
 
   <axis name="YAW">
 
+         <function name="aero/coefficient/Cnb">
+            <description>
+               Yaw moment coefficient due to sideslip(per degree)
+               Determines Dutch Roll and Spiral characteristics
+               Prevents side-slip and yawing moments
+            </description>
+            <product>
+               <property>aero/qbar-psf</property>
+               <property>metrics/Sw-sqft</property>
+               <property>metrics/bw-ft</property>
+               <property>aero/beta-deg</property>
+               <table>
+                  <independentVar lookup="row">aero/alpha-deg</independentVar>
+                  <tableData>
+                       -16.00         .5993E-02
+                       -8.000         .5993E-02
+                       -6.000         .5993E-02
+                       -4.000         .5993E-02
+                       -2.000         .5993E-02
+                         .000         .5993E-02
+                        2.000         .5993E-02
+                        4.000         .5993E-02
+                        8.000         .5993E-02
+                        9.000         .5993E-02
+                        10.00         .5993E-02
+                        12.00         .5993E-02
+                        14.00         .5993E-02
+                        16.00         .5993E-02
+                        18.00         .5993E-02
+                        19.00         .5993E-02
+                        20.00         .5993E-02
+                        21.00         .5993E-02
+                        22.00         .5993E-02
+                        24.00         .5993E-02
+                  </tableData>
+               </table>
+            </product>
+         </function>
+
+         <function name="aero/coefficient/Cnp">
+            <description>
+               Yaw moment coefficient due to roll rate(per degree)
+               Reduces Dutch Roll damping
+               positive value desireable
+            </description>
+            <product>
+               <property>aero/qbar-psf</property>
+               <property>metrics/Sw-sqft</property>
+               <property>metrics/bw-ft</property>
+               <property>aero/bi2vel</property>
+               <property>velocities/p-aero-rad_sec</property>
+               <table>
+                  <independentVar lookup="row">aero/alpha-deg</independentVar>
+                  <tableData>
+                       -16.00         .2737E-02
+                       -8.000         .1062E-02
+                       -6.000         .6002E-03
+                       -4.000         .1312E-03
+                       -2.000        -.3462E-03
+                         .000        -.8506E-03
+                        2.000        -.1346E-02
+                        4.000        -.1811E-02
+                        8.000        -.2552E-02
+                        9.000        -.2715E-02
+                        10.00        -.2853E-02
+                        12.00        -.3146E-02
+                        14.00        -.3476E-02
+                        16.00        -.3814E-02
+                        18.00        -.4161E-02
+                        19.00        -.4336E-02
+                        20.00        -.4508E-02
+                        21.00        -.4670E-02
+                        22.00        -.4827E-02
+                        24.00        -.5138E-02
+                  </tableData>
+               </table>
+            </product>
+         </function>
+
+	 
     <function name="aero/moment/Yaw_beta">
        <description>Yaw moment due to beta</description>
        <product>
@@ -1076,42 +1920,175 @@
        </product>
     </function>
 
-    <function name="aero/moment/Yaw_damp">
-       <description>Yaw moment due to yaw rate</description>
-       <product>
-           <property>aero/qbar-psf</property>
-           <property>metrics/Sw-sqft</property>
-           <property>metrics/bw-ft</property>
-           <property>aero/bi2vel</property>
-           <property>velocities/r-aero-rad_sec</property>
-           <value>-0.15</value>
-       </product>
-    </function>
+         <function name="aero/coefficient/Cnr">
+            <description>
+               Yaw Moment coefficient due to yaw rate(per degree)
+               Main contributor to damping of Dutch Roll
+            </description>
+            <product>
+               <property>aero/qbar-psf</property>
+               <property>metrics/Sw-sqft</property>
+               <property>metrics/bw-ft</property>
+               <property>aero/bi2vel</property>
+               <property>velocities/r-aero-rad_sec</property>
+               <table>
+                  <independentVar lookup="row">aero/alpha-deg</independentVar>
+                  <tableData>
+                       -16.00        -.7066E-02
+                       -8.000        -.7749E-02
+                       -6.000        -.7911E-02
+                       -4.000        -.8069E-02
+                       -2.000        -.8223E-02
+                         .000        -.8371E-02
+                        2.000        -.8501E-02
+                        4.000        -.8605E-02
+                        8.000        -.8714E-02
+                        9.000        -.8725E-02
+                        10.00        -.8729E-02
+                        12.00        -.8733E-02
+                        14.00        -.8722E-02
+                        16.00        -.8694E-02
+                        18.00        -.8649E-02
+                        19.00        -.8619E-02
+                        20.00        -.8584E-02
+                        21.00        -.8543E-02
+                        22.00        -.8498E-02
+                        24.00        -.8395E-02
+                  </tableData>
+               </table>
+            </product>
+         </function>
 
-    <function name="aero/moment/Yaw_rudder">
-       <description>Yaw moment due to rudder</description>
-       <product>
-           <property>aero/qbar-psf</property>
-           <property>metrics/Sw-sqft</property>
-           <property>metrics/bw-ft</property>
-           <property>fcs/rudder-pos-rad</property>
-           <value>-0.1</value>
-       </product>
-    </function>
+         <function name="aero/coefficient/CnDf1">
+            <description>
+               Yaw Moment Coefficient due to Asymetrical Plain Flaps Deflection
+               calculated as difference between left and right flap drag coef,
+               times distance from centerline to MAC of surface.
+            </description>
+            <product>
+               <value>      3.52</value>
+               <difference>
+                  <property>aero/coefficient/CdDf1R</property>
+                  <property>aero/coefficient/CdDf1L</property>
+               </difference>
+            </product>
+         </function>
 
-    <function name="aero/moment/Yaw_aileron">
-       <description>Adverse yaw</description>
-       <product>
-           <property>aero/qbar-psf</property>
-           <property>metrics/Sw-sqft</property>
-           <property>metrics/bw-ft</property>
-           <property>fcs/left-aileron-pos-rad</property>
-           <value>0</value>
-       </product>
-    </function>
+         <function name="aero/coefficient/CnDf11">
+            <description>
+               Yaw Moment Coefficient due to Asymetrical Plain Flaps Deflection
+               calculated as difference between left and right flap drag coef,
+               times distance from centerline to MAC of surface.
+            </description>
+            <product>
+               <value>      3.52</value>
+               <difference>
+                  <property>aero/coefficient/CdDf11R</property>
+                  <property>aero/coefficient/CdDf11L</property>
+               </difference>
+            </product>
+         </function>
+
+         <function name="aero/coefficient/CnDf12">
+            <description>
+               Yaw Moment Coefficient due to Asymetrical Plain Flaps Deflection
+               calculated as difference between left and right flap drag coef,
+               times distance from centerline to MAC of surface.
+            </description>
+            <product>
+               <value>      3.52</value>
+               <difference>
+                  <property>aero/coefficient/CdDf12R</property>
+                  <property>aero/coefficient/CdDf12L</property>
+               </difference>
+            </product>
+         </function>
+
+
+         <function name="aero/coefficient/CnDr">
+            <description>
+               Yaw Coefficient due to rudder(DATCOM does not calculate， default reference value)
+               High value for controllablity, low value
+               for good dynamic stability
+            </description>
+            <product>
+               <property>aero/qbar-psf</property>
+               <property>metrics/Sw-sqft</property>
+               <property>metrics/bw-ft</property>
+               <property>fcs/rudder-pos-deg</property>
+               <value>  -.1047E-02</value>
+            </product>
+         </function>
 
   </axis>
 
+      <function name="aero/elev_hinge_moment_ft_lbs">
+         <description>
+            Elevator hinge moment in ft-lbs
+            HM = q * S * Cbar * ( Ch0 + Cha*alpha + Chd*delta )
+            Positive causes trailing edge down movement
+            Ch0 is used to artifically trim HM to zero
+         </description>
+         <product>
+               <property>aero/qbar-psf</property>
+               <property>metrics/Sw-sqft</property>
+            <value>   14.02    </value>	<!-- surface area of elevator -->
+            <value>   1.323    </value>	<!-- MAC of elevator -->
+            <sum>
+ <!--
+               <property>aero/Ch0_elev</property>	
+ -->
+               <product>
+                  <property>aero/alpha-deg</property>
+                  <table>                            	<!-- Ch-alpha -->
+                     <independentVar lookup="row">
+                     aero/alpha-deg</independentVar>
+                     <tableData>
+                          -16.00    	   .7926E-03
+                          -8.000    	   .7926E-03
+                          -6.000    	   .7926E-03
+                          -4.000    	   .7926E-03
+                          -2.000    	   .7926E-03
+                            .000    	   .7926E-03
+                           2.000    	   .7926E-03
+                           4.000    	   .7926E-03
+                           8.000    	   .7926E-03
+                           9.000    	   .7926E-03
+                           10.00    	   .4666E-02
+                           12.00    	   .4691E-02
+                           14.00    	   .4711E-02
+                           16.00    	   .4714E-02
+                           18.00    	   .4714E-02
+                           19.00    	   .4714E-02
+                           20.00    	   .4711E-02
+                           21.00    	   .4691E-02
+                           22.00    	   .4666E-02
+                           24.00    	   .4714E-02
+                     </tableData>
+                  </table>
+               </product>
+               <product>
+                  <property>fcs/elevator-pos-deg</property>
+                  <table>                            	<!-- Ch-delta elevator -->
+                     <independentVar lookup="row">
+                     fcs/elevator-pos-deg</independentVar>
+                     <tableData>
+                          -30.00    	   .4666E-02
+                          -20.00    	   .4691E-02
+                          -15.00    	   .4711E-02
+                          -5.000    	   .4714E-02
+                            .000    	   .4714E-02
+                           5.000    	   .4714E-02
+                           15.00    	   .4711E-02
+                           20.00    	   .4691E-02
+                           30.00    	   .4666E-02
+                     </tableData>
+                  </table>
+               </product>
+            </sum>
+         </product>
+      </function>
+  
  </aerodynamics>
 
  <external_reactions>
