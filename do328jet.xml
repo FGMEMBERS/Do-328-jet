@@ -535,32 +535,300 @@
 
   <axis name="LIFT">
 
-    <function name="aero/force/Lift_alpha">
-      <description>Lift due to alpha</description>
-      <product>
-          <property>aero/qbar-psf</property>
-          <property>metrics/Sw-sqft</property>
-          <table>
-            <independentVar lookup="row">aero/alpha-rad</independentVar>
-            <tableData>
-              -0.20 -0.680
-               0.00  0.200
-               0.23  1.200
-               0.60  0.600
-            </tableData>
-          </table>
-      </product>
-    </function>
+         <function name="aero/coefficient/CLwbh">
+            <description>
+               Lift due to alpha
+               Increase in CL decreases Period and damping,Dutch Roll damping
+               CL is low for landing
+            </description>
+            <product>
+               <property>aero/function/ground-effect-factor-lift</property>
+               <property>aero/qbar-psf</property>
+               <property>metrics/Sw-sqft</property>
+               <table>
+                  <independentVar lookup="row">aero/alpha-deg</independentVar>
+                  <tableData>
+                       -16.00        -1.101    
+                       -8.000        -.2734    
+                       -6.000        -.4470E-01
+                       -4.000         .1873    
+                       -2.000         .4173    
+                         .000         .6439    
+                        2.000         .8387    
+                        4.000         .9953    
+                        8.000         1.197    
+                        9.000         1.241    
+                        10.00         1.278    
+                        12.00         1.375    
+                        14.00         1.490    
+                        16.00         1.608    
+                        18.00         1.739    
+                        19.00         1.805    
+                        20.00         1.868    
+                        21.00         1.931    
+                        22.00         1.989    
+                        24.00         2.125    
+                  </tableData>
+               </table>
+            </product>
+         </function>
 
-    <function name="aero/force/Lift_flap">
-       <description>Delta Lift due to flaps</description>
-       <product>
-           <property>aero/qbar-psf</property>
-           <property>metrics/Sw-sqft</property>
-           <property>fcs/flap-pos-deg</property>
-           <value> 0.05000 </value>
-       </product>
-    </function>
+         <function name="aero/coefficient/CLq">
+            <description>
+               Basic Lift Coefficient due to pitch rate(per degree)
+            </description>
+            <product>
+               <property>velocities/q-aero-rad_sec</property>
+               <value>57.29577951</value>
+               <property>aero/qbar-psf</property>
+               <property>metrics/Sw-sqft</property>
+               <property>aero/ci2vel</property>
+               <table>
+                  <independentVar lookup="row">aero/alpha-deg</independentVar>
+                  <tableData>
+                       -16.00         .8904E-01
+                       -8.000         .8904E-01
+                       -6.000         .8904E-01
+                       -4.000         .8904E-01
+                       -2.000         .8904E-01
+                         .000         .8904E-01
+                        2.000         .8904E-01
+                        4.000         .8904E-01
+                        8.000         .8904E-01
+                        9.000         .8904E-01
+                        10.00         .8904E-01
+                        12.00         .8904E-01
+                        14.00         .8904E-01
+                        16.00         .8904E-01
+                        18.00         .8904E-01
+                        19.00         .8904E-01
+                        20.00         .8904E-01
+                        21.00         .8904E-01
+                        22.00         .8904E-01
+                        24.00         .8904E-01
+                  </tableData>
+               </table>
+            </product>
+         </function>
+
+         <function name="aero/coefficient/CLad">
+            <description>
+               Basic Lift Coefficient due to AOA rate(per degree)
+               Important contributor to Short-Period damping
+               For low Cla, aircraft must land at high alpha
+            </description>
+            <product>
+               <property>aero/alphadot-deg_sec</property>
+               <property>aero/qbar-psf</property>
+               <property>metrics/Sw-sqft</property>
+               <property>aero/ci2vel</property>
+               <table>
+                  <independentVar lookup="row">aero/alpha-deg</independentVar>
+                  <tableData>
+                       -16.00         .1065E-01
+                       -8.000         .1303E-01
+                       -6.000         .1389E-01
+                       -4.000         .1452E-01
+                       -2.000         .1492E-01
+                         .000         .1459E-01
+                        2.000         .1337E-01
+                        4.000         .1127E-01
+                        8.000         .7276E-02
+                        9.000         .7158E-02
+                        10.00         .7711E-02
+                        12.00         .9060E-02
+                        14.00         .1095E-01
+                        16.00         .1141E-01
+                        18.00         .7011E-02
+                        19.00         .5269E-02
+                        20.00         .5321E-02
+                        21.00         .4784E-02
+                        22.00         .3604E-02
+                        24.00         .2435E-02
+                  </tableData>
+               </table>
+            </product>
+         </function>
+
+         <function name="aero/coefficient/CLdF1L">
+            <description>
+               Lift Coefficient due to Left Plain Flaps Deflection
+               Positive surface deflection is trailing edge down
+               Ultimately, we will feed this left flap pos
+            </description>
+            <product>
+               <property>aero/qbar-psf</property>
+               <property>metrics/Sw-sqft</property>
+               <table>
+                  <independentVar lookup="row">fcs/flap-pos-deg</independentVar>
+                  <tableData>
+                       -30.00        -.1331E-01
+                       -20.00        -.1166E-01
+                       -15.00        -.1045E-01
+                       -5.000        -.3569E-02
+                         .000          .000    
+                        5.000         .3569E-02
+                        15.00         .1045E-01
+                        20.00         .1166E-01
+                        30.00         .1331E-01
+                  </tableData>
+               </table>
+            </product>
+         </function>
+
+         <function name="aero/coefficient/CLdF1R">
+            <description>
+               Lift Coefficient due to Right Plain Flaps Deflection
+               Positive surface deflection is trailing edge down
+               Ultimately, we will feed this right flap pos
+            </description>
+            <product>
+               <property>aero/qbar-psf</property>
+               <property>metrics/Sw-sqft</property>
+               <table>
+                  <independentVar lookup="row">fcs/flap-pos-deg</independentVar>
+                  <tableData>
+                       -30.00        -.1331E-01
+                       -20.00        -.1166E-01
+                       -15.00        -.1045E-01
+                       -5.000        -.3569E-02
+                         .000          .000    
+                        5.000         .3569E-02
+                        15.00         .1045E-01
+                        20.00         .1166E-01
+                        30.00         .1331E-01
+                  </tableData>
+               </table>
+            </product>
+         </function>
+         <function name="aero/coefficient/CLdF11L">
+            <description>
+               Lift Coefficient due to Left Plain Flaps Deflection
+               Positive surface deflection is trailing edge down
+               Ultimately, we will feed this left flap pos
+            </description>
+            <product>
+               <property>aero/qbar-psf</property>
+               <property>metrics/Sw-sqft</property>
+               <table>
+                  <independentVar lookup="row">fcs/flap-pos-deg</independentVar>
+                  <tableData>
+                        30.00        -.1325E-01
+                        20.00        -.1161E-01
+                        15.00        -.1041E-01
+                        5.000        -.3553E-02
+                         .000          .000    
+                       -5.000         .3553E-02
+                       -15.00         .1041E-01
+                       -20.00         .1161E-01
+                       -30.00         .1325E-01
+                  </tableData>
+               </table>
+            </product>
+         </function>
+
+         <function name="aero/coefficient/CLdF11R">
+            <description>
+               Lift Coefficient due to Right Plain Flaps Deflection
+               Positive surface deflection is trailing edge down
+               Ultimately, we will feed this right flap pos
+            </description>
+            <product>
+               <property>aero/qbar-psf</property>
+               <property>metrics/Sw-sqft</property>
+               <table>
+                  <independentVar lookup="row">fcs/flap-pos-deg</independentVar>
+                  <tableData>
+                        30.00        -.1325E-01
+                        20.00        -.1161E-01
+                        15.00        -.1041E-01
+                        5.000        -.3553E-02
+                         .000          .000    
+                       -5.000         .3553E-02
+                       -15.00         .1041E-01
+                       -20.00         .1161E-01
+                       -30.00         .1325E-01
+                  </tableData>
+               </table>
+            </product>
+         </function>
+
+         <function name="aero/coefficient/CLdF12L">
+            <description>
+               Lift Coefficient due to Left Plain Flaps Deflection
+               Positive surface deflection is trailing edge down
+               Ultimately, we will feed this left flap pos
+            </description>
+            <product>
+               <property>aero/qbar-psf</property>
+               <property>metrics/Sw-sqft</property>
+               <table>
+                  <independentVar lookup="row">fcs/flap-pos-deg</independentVar>
+                  <tableData>
+                        30.00        -.1136E-01
+                        20.00        -.9951E-02
+                        15.00        -.8920E-02
+                        5.000        -.3045E-02
+                         .000          .000    
+                       -5.000         .3045E-02
+                       -15.00         .8920E-02
+                       -20.00         .9951E-02
+                       -30.00         .1136E-01
+                  </tableData>
+               </table>
+            </product>
+         </function>
+
+         <function name="aero/coefficient/CLdF12R">
+            <description>
+               Lift Coefficient due to Right Plain Flaps Deflection
+               Positive surface deflection is trailing edge down
+               Ultimately, we will feed this right flap pos
+            </description>
+            <product>
+               <property>aero/qbar-psf</property>
+               <property>metrics/Sw-sqft</property>
+               <table>
+                  <independentVar lookup="row">fcs/flap-pos-deg</independentVar>
+                  <tableData>
+                        30.00        -.1136E-01
+                        20.00        -.9951E-02
+                        15.00        -.8920E-02
+                        5.000        -.3045E-02
+                         .000          .000    
+                       -5.000         .3045E-02
+                       -15.00         .8920E-02
+                       -20.00         .9951E-02
+                       -30.00         .1136E-01
+                  </tableData>
+               </table>
+            </product>
+         </function>
+
+         <function name="aero/coefficient/CLDe">
+            <description>
+               Lift Coefficient due to Elevator Deflection
+               Positive surface deflection is trailing edge down
+            </description>
+            <product>
+               <property>aero/qbar-psf</property>
+               <property>metrics/Sw-sqft</property>
+               <table>
+                  <independentVar lookup="row">fcs/elevator-pos-deg</independentVar>
+                  <tableData>
+                       -30.00        -.2271E-01
+                       -20.00        -.1990E-01
+                       -15.00        -.1784E-01
+                       -5.000        -.6091E-02
+                         .000         .1218E-04
+                        5.000         .6091E-02
+                        15.00         .1784E-01
+                        20.00         .1990E-01
+                        30.00         .2271E-01
+                  </tableData>
+               </table>
+            </product>
+         </function>
 
     <function name="aero/force/Lift_speedbrake">
        <description>Delta Lift due to speedbrake</description>
@@ -572,37 +840,10 @@
        </product>
     </function>
 
-    <function name="aero/force/Lift_elevator">
-       <description>Lift due to Elevator Deflection</description>
-       <product>
-           <property>aero/qbar-psf</property>
-           <property>metrics/Sw-sqft</property>
-           <property>fcs/elevator-pos-rad</property>
-           <value>0.2</value>
-       </product>
-    </function>
-
   </axis>
 
   <axis name="DRAG">
 
-    <function name="aero/force/Drag_basic">
-       <description>Drag at zero lift</description>
-       <product>
-          <property>aero/qbar-psf</property>
-          <property>metrics/Sw-sqft</property>
-          <table>
-            <independentVar lookup="row">aero/alpha-rad</independentVar>
-            <tableData>
-             -1.57    1.500
-             -0.26    0.026
-              0.00    0.020
-              0.26    0.026
-              1.57    1.500
-            </tableData>
-          </table>
-       </product>
-    </function>
 
     <function name="aero/force/Drag_induced">
        <description>Induced drag</description>
