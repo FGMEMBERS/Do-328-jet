@@ -47,7 +47,7 @@
    <vtailarea unit="FT2">  174.7093 </vtailarea>
    <vtailarm  unit="FT" >   30.1346 </vtailarm>
    <location name="AERORP" unit="IN">
-     <x> 391.48 </x>
+     <x> 330.32 </x>
      <y>   0.00 </y>
      <z>   0.00 </z>
    </location>
@@ -57,9 +57,9 @@
      <z>  70.00 </z>
    </location>
    <location name="VRP" unit="IN">
-     <x>0</x>
-     <y>0</y>
-     <z>0</z>
+     <x>330.32</x>
+     <y>0.00</y>
+     <z>0.00</z>
    </location>
  </metrics>
 
@@ -69,17 +69,17 @@
    <izz unit="SLUG*FT2">    164321 </izz>
    <emptywt unit="LBS" >     20771 </emptywt>
    <location name="CG" unit="IN">
-     <x> 391.48 </x>
+     <x> 330.32 </x>
      <y>   0.00 </y>
-     <z> -20.99 </z>
+     <z> 0.00 </z>
    </location>
    <pointmass name="Payload">
     <description> 4194 LBS + full (9565 LBS) fuel should bring model up to entered max weight</description>
     <weight unit="LBS">   2097.2 </weight>
     <location name="POINTMASS" unit="IN">
-      <x> 391.48 </x>
+      <x> 330.32 </x>
       <y>   0.00 </y>
-      <z> -20.99 </z>
+      <z> 0.0 </z>
     </location>
   </pointmass> 
  </mass_balance>
@@ -88,9 +88,9 @@
 
   <contact type="BOGEY" name="NOSE">
    <location unit="IN">
-     <x> 109.12 </x>
+     <x> 64.34 </x>
      <y>   0.00 </y>
-     <z> -100.73 </z>
+     <z> -88.85 </z>
    </location>
    <static_friction>  0.80 </static_friction>
    <dynamic_friction> 0.50 </dynamic_friction>
@@ -104,9 +104,9 @@
 
   <contact type="BOGEY" name="LEFT_MAIN">
    <location unit="IN">
-     <x> 407.13 </x>
-     <y> -74.34 </y>
-     <z> -100.73 </z>
+     <x> 350.81 </x>
+     <y> -64.60 </y>
+     <z> -88.85 </z>
    </location>
    <static_friction>  0.80 </static_friction>
    <dynamic_friction> 0.50 </dynamic_friction>
@@ -120,9 +120,9 @@
 
   <contact type="BOGEY" name="RIGHT_MAIN">
    <location unit="IN">
-     <x> 407.13 </x>
-     <y>  74.34 </y>
-     <z> -100.73 </z>
+     <x> 350.81 </x>
+     <y>  64.60 </y>
+     <z> -88.85 </z>
    </location>
    <static_friction>  0.80 </static_friction>
    <dynamic_friction> 0.50 </dynamic_friction>
@@ -136,9 +136,9 @@
 
   <contact type="STRUCTURE" name="LEFT_WING">
     <location unit="IN">
-     <x> 391.48 </x>
-     <y> -34.42 </y>
-     <z> -20.99 </z>
+     <x> 330.32 </x>
+     <y> -39.83 </y>
+     <z> 42.89 </z>
     </location>
     <static_friction>  1.00 </static_friction>
     <dynamic_friction> 1.00 </dynamic_friction>
@@ -148,9 +148,9 @@
 
   <contact type="STRUCTURE" name="RIGHT_WING">
     <location unit="IN">
-     <x> 391.48 </x>
-     <y>  34.42 </y>
-     <z> -20.99 </z>
+     <x> 330.32 </x>
+     <y> 39.83 </y>
+     <z> 42.89 </z>
     </location>
     <static_friction>  1.00 </static_friction>
     <dynamic_friction> 1.00 </dynamic_friction>
@@ -216,32 +216,22 @@
 
   <tank type="FUEL" number="0">
      <location unit="IN">
-       <x> 391.48 </x>
-       <y>   0.00 </y>
-       <z> 0.00 </z>
+       <x> 330.32 </x>
+       <y>-216.00 </y>
+       <z> 42.89 </z>
      </location>
-     <capacity unit="LBS"> 3188.30 </capacity>
-     <contents unit="LBS"> 1594.15 </contents>
+     <capacity unit="LBS"> 5557.50 </capacity>
+     <contents unit="LBS"> 2778.75 </contents>
   </tank>
 
   <tank type="FUEL" number="1">
      <location unit="IN">
-       <x> 391.48 </x>
-       <y>   0.00 </y>
-       <z> 0.00 </z>
+       <x> 330.32 </x>
+       <y> 216.00 </y>
+       <z> 42.89 </z>
      </location>
-     <capacity unit="LBS"> 3188.30 </capacity>
-     <contents unit="LBS"> 1594.15 </contents>
-  </tank>
-
-  <tank type="FUEL" number="2">
-     <location unit="IN">
-       <x> 391.48 </x>
-       <y>   0.00 </y>
-       <z> 0.00 </z>
-     </location>
-     <capacity unit="LBS"> 3188.30 </capacity>
-     <contents unit="LBS"> 1594.15 </contents>
+     <capacity unit="LBS"> 5557.50 </capacity>
+     <contents unit="LBS"> 2778.75 </contents>
   </tank>
 
  </propulsion>
